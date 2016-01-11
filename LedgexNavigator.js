@@ -24,7 +24,7 @@ var LedgexNavigator = React.createClass({
 
         default:
           return (
-              <LedgexHome navigator={nav} auth_headers={route.auth_headers}/>
+              <LedgexLogin navigator={nav}/>
           );
     }
   },
