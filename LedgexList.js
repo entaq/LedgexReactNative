@@ -65,10 +65,10 @@ var LedgexList = React.createClass({
                 dataSource={this.state.dataSource}
                 renderRow={this._renderRow}
                 renderHeader={this._renderHeader}
+                customContent={this.props.content}
             />;
         return (
-
-        content
+            content
         );
     },
 
