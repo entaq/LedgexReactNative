@@ -8,23 +8,31 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  TextInput,
+  View,
+  Image
 } from 'react-native';
+
+var LedgexButton = require('./LedgexButton');
 
 class Ledgex extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image
+          source={require('./ledgex.png')}
+          style={styles.logo}
+          />
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to Ledgex, please sign in
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <TextInput style={styles.login_input}
+          placeholder='Email'
+        />
+        <TextInput style={styles.login_input}
+          placeholder='Password'
+        />
+        <LedgexButton>Login</LedgexButton>
       </View>
     );
   }
@@ -37,16 +45,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  logo: {
+    width: 180,
+    height: 180
+  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  login_input : {
+    margin: 7,
+    padding: 7,
+    borderRadius: 8,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1
+  }
 });
 
 AppRegistry.registerComponent('Ledgex', () => Ledgex);
