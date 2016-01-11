@@ -8,6 +8,7 @@ var {
     Text,
     View,
     ActivityIndicatorIOS,
+    PixelRatio
     } = React;
 
 var LedgexList = React.createClass({
@@ -21,9 +22,21 @@ var LedgexList = React.createClass({
 
     componentDidMount: function() {
         var params = {
-            headers : this.props.auth_headers,
+            headers: this.props.auth_headers,
+            method: 'POST'
+        };
+        switch(this.props.content){
+            case 'contacts':
+                params.body = 'EntityId=5&ViewId=9&page=1&pageSize=50';
+                break;
+            case 'investors':
+                params.body = 'EntityId=10&ViewId=19&page=1&pageSize=50';
+                break;
+            case 'balances':
+                params.body = 'EntityId=45&ViewId=148&page=1&pageSize=50';
+                break;
         }
-        fetch('https://test.ledgex.com/api/Analyst/GetAll',params)
+        fetch('https://test.ledgex.com/api/list/GetList',params)
             .then((response) => response.json())
             .catch((error) => {
                 this.setState({
@@ -34,7 +47,7 @@ var LedgexList = React.createClass({
             .then((responseData) => {
                 this.setState({
                     isLoading: false,
-                    dataSource: this.getDataSource(responseData),
+                    dataSource: this.getDataSource(responseData.Data),
                 });
             })
             .done();
@@ -51,20 +64,44 @@ var LedgexList = React.createClass({
             <ListView
                 dataSource={this.state.dataSource}
                 renderRow={this._renderRow}
-            />
+                renderHeader={this._renderHeader}
+            />;
         return (
-            content
+
+        content
+        );
+    },
+
+    _renderHeader: function() {
+        return (
+            <TouchableHighlight
+                style={styles.button}
+                underlayColor="#B5B5B5">
+                <Text style={styles.buttonText}>{this.props.content}</Text>
+            </TouchableHighlight>
         );
     },
 
     _renderRow: function(rowData: string, sectionID: number, rowID: number) {
+        var tableRow;
+
+        switch(this.props.content){
+            case 'contacts':
+                tableRow = <Text style={styles.text}>{rowData.LedgexName}</Text>;
+                break;
+            case 'investors':
+                 tableRow = <Text style={styles.text}>{rowData.Name}</Text>;
+                break;
+            case 'balances':
+                tableRow = <Text style={styles.text}>{rowData.AccountCDDisplayText}</Text>;
+                break;
+        }
+
         return (
             <TouchableHighlight onPress={() => this._pressRow(rowID)}>
                 <View>
                     <View style={styles.row}>
-                        <Text style={styles.text}>
-                            {rowData.FirstName + ' ' + rowData.LastName}
-                        </Text>
+                            {tableRow}
                     </View>
                     <View style={styles.separator} />
                 </View>
@@ -80,11 +117,11 @@ var LedgexList = React.createClass({
 var LoadingOrEmptyCell = React.createClass({
     render: function() {
         return (
-            <View style={{}}>
+            <View style={[styles.centering, {paddingTop: 40}]}>
                 <ActivityIndicatorIOS
-                    style={[styles.centering, {height: 40}]}
+                    style={{height: 40}}
                 />
-                <Text style={{}}>Empty Cell</Text>
+                <Text style={{}}>Loading</Text>
             </View>
         );
     }
@@ -107,6 +144,19 @@ var styles = StyleSheet.create({
     },
     text: {
         flex: 1,
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        padding: 15,
+        paddingTop: 40,
+        borderBottomWidth: 1 / PixelRatio.get(),
+        borderBottomColor: '#CDCDCD',
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500',
     },
 });
 
