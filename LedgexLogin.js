@@ -42,6 +42,10 @@ class LedgexLogin extends Component {
     login() {
         var params = {
             method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
             body: 'grant_type=password&username='+
             this.state.email+'&password='+this.state.password
         }
@@ -54,7 +58,9 @@ class LedgexLogin extends Component {
                 } else {
                     var auth_headers = {
                         'tenant_id': responseData.default_tenant_identifier,
-                        'Authorization': 'Bearer ' + responseData.access_token
+                        'Authorization': 'Bearer ' + responseData.access_token,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                     this.props.navigator.push({ id: 'home', auth_headers: auth_headers });
                 }
