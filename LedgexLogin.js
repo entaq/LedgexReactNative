@@ -52,9 +52,11 @@ class LedgexLogin extends Component {
                 if (responseData.error) {
                     Alert.alert('Error',responseData.error_description)
                 } else {
-                    this.props.navigator.push({ id: 'home' });
-                    console.log(responseData.default_tenant_idenstifier)
-                    console.log(responseData.access_token)
+                    var auth_headers = {
+                        'tenant_id': responseData.default_tenant_identifier,
+                        'Authorization': 'Bearer ' + responseData.access_token
+                    }
+                    this.props.navigator.push({ id: 'home', auth_headers: auth_headers });
                 }
             })
             .done();
@@ -87,7 +89,4 @@ const styles = StyleSheet.create({
     }
 });
 
-//
-//LedgexLogin.external = true;
-//
 module.exports = LedgexLogin;

@@ -13,7 +13,7 @@ var LedgexNavigator = React.createClass({
     switch (route.id) {
         case 'home':
             return (
-                <LedgexHome navigator={nav}/>
+                <LedgexHome navigator={nav} auth_headers={route.auth_headers}/>
             );
       default:
           return (
