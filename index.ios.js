@@ -1,7 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 import React, {
   AppRegistry,
@@ -10,7 +6,8 @@ import React, {
   Text,
   TextInput,
   View,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 
 var LedgexButton = require('./LedgexButton');
@@ -28,14 +25,39 @@ class Ledgex extends Component {
         </Text>
         <TextInput style={styles.login_input}
           placeholder='Email'
+          onChangeText={(text) => this.setState({email: text})}
+          selectTextOnFocus={true}
+          autoFocus={true}
         />
         <TextInput style={styles.login_input}
           placeholder='Password'
+          onChangeText={(text) => this.setState({password: text})}
+          password={true}
+          selectTextOnFocus={true}
         />
-        <LedgexButton>Login</LedgexButton>
+        <LedgexButton onPress={()=>this.login()}>Login
+        </LedgexButton>
       </View>
     );
   }
+  login() {
+    var params = {
+      method: 'POST',
+      body: 'grant_type=password&username='+
+             this.state.email+'&password='+this.state.password
+    }
+    fetch('https://test.ledgex.com/token',params)
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (responseData.error) {
+            Alert.alert('Error',responseData.error_description)
+        } else {
+          console.log(responseData.default_tenant_idenstifier)
+          console.log(responseData.access_token)
+        }
+      })
+      .done();
+    }
 }
 
 const styles = StyleSheet.create({
