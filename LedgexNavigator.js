@@ -7,6 +7,8 @@ var {
 
 var LedgexHome = require('./LedgexHome');
 var LedgexLogin = require('./LedgexLogin');
+var LedgexFormScreen = require('./LedgexFormScreen');
+
 
 var LedgexNavigator = React.createClass({
   renderScene: function(route, nav) {
@@ -15,7 +17,12 @@ var LedgexNavigator = React.createClass({
             return (
                 <LedgexHome navigator={nav} auth_headers={route.auth_headers}/>
             );
-      default:
+        case 'form':
+            return (
+                <LedgexFormScreen navigator={nav} data={route.data} auth_headers={route.auth_headers}/>
+            );
+
+        default:
           return (
               <LedgexLogin navigator={nav}/>
           );

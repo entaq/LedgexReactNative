@@ -63,7 +63,7 @@ render: function() {
             drawerWidth={250}
             drawerPosition={DrawerLayoutAndroid.positions.Left}
             renderNavigationView={() => navigationView}>
-            <LedgexList content={this.state.content} auth_headers={this.props.auth_headers}/>
+            <LedgexList navigator={this.props.navigator} content={this.state.content} auth_headers={this.props.auth_headers}/>
         </DrawerLayoutAndroid>
     );
 

@@ -19,7 +19,7 @@ var LedgexHome = React.createClass({
 
     _renderContent: function(content: string) {
         return (
-            <LedgexList content={content} auth_headers={this.props.auth_headers}/>
+            <LedgexList navigator={this.props.navigator} content={content} auth_headers={this.props.auth_headers}/>
         );
     },
 

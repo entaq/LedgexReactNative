@@ -98,7 +98,7 @@ var LedgexList = React.createClass({
         }
 
         return (
-            <TouchableHighlight onPress={() => this._pressRow(rowID)}>
+        <TouchableHighlight onPress={() => this._pressRow(rowData)}>
                 <View>
                     <View style={styles.row}>
                             {tableRow}
@@ -109,8 +109,8 @@ var LedgexList = React.createClass({
         );
     },
 
-    _pressRow: function(rowID: number) {
-
+    _pressRow: function(rowData: string) {
+        this.props.navigator.push({id:'form', data:rowData})
     },
 });
 
