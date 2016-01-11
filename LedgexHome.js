@@ -37,7 +37,7 @@ render: function() {
               selectedTab: 'contacts',
             });
           }}>
-                {this._renderContent('investors')}
+                {this._renderContent('contacts')}
             </TabBarIOS.Item>
             <TabBarIOS.Item
                 icon={require('./Briefcase-35.png')}
